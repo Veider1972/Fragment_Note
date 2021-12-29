@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_margin">10sp</dimen>
+    <dimen name="note_title_text_size">25sp</dimen>
+    <dimen name="note_description_text_size">20sp</dimen>
+    <dimen name="editor_description_editor_lines">5</dimen>
+    <dimen name="note_editor_button_text_size">13sp</dimen>
+    <dimen name="note_padding">3sp</dimen>
+</resources>

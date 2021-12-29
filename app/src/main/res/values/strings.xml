@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Fragment_Note</string>
+    <string name="app_name">Мои фрагментные заметки</string>
+    <string name="editor_description_lines">Текст заметки</string>
+    <string name="editor_title_hint">Заголовок</string>
+    <string name="editor_description_hint">Текст заметки</string>
+    <string name="button_accept_text">Принять</string>
+    <string name="button_delete_text">Удалить</string>
+    <string name="button_cancel_text">Отменить</string>
 </resources>

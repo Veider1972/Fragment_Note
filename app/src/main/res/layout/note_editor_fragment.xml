@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/item_margin"
+    android:orientation="vertical"
+    android:id="@+id/note_editor_fragment"
+    android:theme="@style/Theme.MyNotes">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/title_text_editor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/editor_title_hint"
+        android:textSize="@dimen/note_title_text_size"
+        tools:text="Заголовок" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/description_text_editor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/editor_description_hint"
+        android:minLines="5"
+        android:textSize="@dimen/note_description_text_size"
+        tools:text="Текст заметки" />
+
+    <com.google.android.material.circularreveal.CircularRevealGridLayout
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:columnCount="3"
+        android:rowCount="1">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/accept_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:textSize="@dimen/note_editor_button_text_size"
+            android:elevation="@dimen/item_margin"
+            android:text="@string/button_accept_text"
+            app:iconGravity="textStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_marginRight="3sp"
+            android:layout_marginLeft="3sp"
+            android:textSize="@dimen/note_editor_button_text_size"
+            android:elevation="@dimen/item_margin"
+            android:text="@string/button_delete_text"
+            app:iconGravity="textStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel_button"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:textSize="@dimen/note_editor_button_text_size"
+            android:elevation="@dimen/item_margin"
+            android:text="@string/button_cancel_text" />
+
+    </com.google.android.material.circularreveal.CircularRevealGridLayout>
+</LinearLayout>
