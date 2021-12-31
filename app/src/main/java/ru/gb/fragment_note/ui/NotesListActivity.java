@@ -1,7 +1,6 @@
 package ru.gb.fragment_note.ui;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +8,9 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Calendar;
+import java.util.Random;
 
 import ru.gb.fragment_note.repository.Constants;
 import ru.gb.fragment_note.repository.Note;
@@ -19,34 +21,19 @@ public class NotesListActivity extends AppCompatActivity implements NotesListFra
 
     private final Notes notes = Notes.getInstance();
     private NotesListFragment notesListFragment;
-    private NoteEditorFragment noteEditorFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes_list);
-
         notesListFragment = new NotesListFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.notes_list_fragment_container, notesListFragment)
-                //.addToBackStack(null)
                 .commit();
-
+        Random rnd = new Random();
         for (int i = 0; i < 10; i++) {
-            notes.add("Заголовок " + i, "Текст заметки " + i);
+            notes.add("Заголовок " + i, "Текст заметки " + i, Calendar.getInstance(), images[rnd.nextInt(3)]);
         }
-
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            if (notes.getSize()>0) {
-                Note note = notes.getNote(0);
-                noteEditorFragment = new NoteEditorFragment();
-                noteEditorFragment.setNote(note);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.note_editor_fragment_container, noteEditorFragment)
-                        .commit();
-            }
-        }
-
     }
 
     @Override
@@ -59,7 +46,7 @@ public class NotesListActivity extends AppCompatActivity implements NotesListFra
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_note:
-                Note note = new Note(notes.getNewID(), "", "");
+                Note note = new Note(notes.getNewID(), "", "", Calendar.getInstance(), 0);
                 startNoteEdit(note);
                 break;
             case R.id.settings:
@@ -75,29 +62,14 @@ public class NotesListActivity extends AppCompatActivity implements NotesListFra
 
     @Override
     public void startNoteEdit(Note note) {
-        noteEditorFragment = new NoteEditorFragment();
-        noteEditorFragment.setNote(note);
-        int orientation = getResources().getConfiguration().orientation;
-        switch (orientation) {
-            case Configuration.ORIENTATION_PORTRAIT:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.notes_list_fragment_container, noteEditorFragment)
-                        .addToBackStack("Editor")
-                        .commit();
-                break;
-            case Configuration.ORIENTATION_LANDSCAPE:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.note_editor_fragment_container, noteEditorFragment)
-                        .commit();
-                break;
-        }
+        NoteEditorFragment noteEditorFragment = NoteEditorFragment.getInstance(note);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.note_editor_fragment_container, noteEditorFragment)
+                .commit();
     }
 
-
-
     @Override
-    public void resultNoteEdit(EditResult result, Note note) {
-        int orientation = getResources().getConfiguration().orientation;
+    public void resultNoteEdit(EditResult result, Note note, NoteEditorFragment noteEditorFragment) {
         switch (result) {
             case RESULT_UPDATE:
                 if (note != null) {
@@ -114,15 +86,8 @@ public class NotesListActivity extends AppCompatActivity implements NotesListFra
             case RESULT_CANCEL:
                 break;
         }
-        switch (orientation){
-            case Configuration.ORIENTATION_PORTRAIT:
-                this.onBackPressed();
-                break;
-            case Configuration.ORIENTATION_LANDSCAPE:
-                getSupportFragmentManager().beginTransaction()
-                        .remove(noteEditorFragment)
-                        .commit();
-                break;
-        }
+        getSupportFragmentManager().beginTransaction()
+                .remove(noteEditorFragment)
+                .commit();
     }
 }
