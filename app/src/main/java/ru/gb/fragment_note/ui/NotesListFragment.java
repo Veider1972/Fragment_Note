@@ -22,7 +22,6 @@ public class NotesListFragment extends Fragment implements NotesListAdapter.OnNo
 
     private final Notes notes = Notes.getInstance();
 
-    private RecyclerView notesViewer;
     private NotesListAdapter notesViewerAdapter;
     private NotesListController notesListController;
 
@@ -30,7 +29,7 @@ public class NotesListFragment extends Fragment implements NotesListAdapter.OnNo
         void startNoteEdit(Note note);
     }
 
-    public void notifyDataSetChanged(){
+    public void notifyDataSetChanged() {
         notesViewerAdapter.notifyDataSetChanged();
     }
 
@@ -55,16 +54,20 @@ public class NotesListFragment extends Fragment implements NotesListAdapter.OnNo
         notesViewerAdapter = new NotesListAdapter();
         notesViewerAdapter.setNotes(notes);
         notesViewerAdapter.setOnNoteClickListener(this);
-        notesViewer = notesViewFragment.findViewById(R.id.notes_viewer);
+        RecyclerView notesViewer = notesViewFragment.findViewById(R.id.notes_viewer);
         notesViewer.setLayoutManager(new LinearLayoutManager(getContext()));
         notesViewer.setAdapter(notesViewerAdapter);
-
         return notesViewFragment;
+    }
+
+    @Override
+    public void onDetach() {
+        notesListController = null;
+        super.onDetach();
     }
 
     @Override
     public void onNoteClick(Note note) {
         notesListController.startNoteEdit(note);
     }
-
 }

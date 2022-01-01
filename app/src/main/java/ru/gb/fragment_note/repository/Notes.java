@@ -2,6 +2,7 @@ package ru.gb.fragment_note.repository;
 
 import androidx.annotation.NonNull;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 
 public class Notes {
@@ -21,11 +22,11 @@ public class Notes {
         return notes.size();
     }
 
-    public void add(@NonNull String title, String description){
+    public void add(@NonNull String title, String description, Calendar calendar, int picture){
         int id;
         if (notes.size()==0) id = 0;
         else id = notes.getLast().getId()+1;
-        notes.add(new Note(id,title,description));
+        notes.add(new Note(id,title,description,calendar,picture));
     }
 
     public boolean delete(int id){
