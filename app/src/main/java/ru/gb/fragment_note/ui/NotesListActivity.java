@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,6 +51,10 @@ public class NotesListActivity extends AppCompatActivity implements NotesListFra
                 startNoteEdit(note);
                 break;
             case R.id.settings:
+                Toast.makeText(this,"Вызов настроек", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.app_bar_search:
+                Toast.makeText(this,"Поиск заметки", Toast.LENGTH_LONG).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -74,16 +79,11 @@ public class NotesListActivity extends AppCompatActivity implements NotesListFra
             case RESULT_UPDATE:
                 if (note != null) {
                     notes.addOrUpdateNote(note);
-                    notesListFragment.notifyDataSetChanged();
-                }
-                break;
-            case RESULT_DELETE:
-                if (note != null) {
-                    notes.delete(note.getId());
-                    notesListFragment.notifyDataSetChanged();
+                    notesListFragment.getNotesViewerAdapter().notifyItemChanged(notes.getIndexByID(note.getId()));
                 }
                 break;
             case RESULT_CANCEL:
+            default:
                 break;
         }
         getSupportFragmentManager().beginTransaction()

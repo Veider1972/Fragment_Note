@@ -2,6 +2,7 @@ package ru.gb.fragment_note.recyclerview;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import ru.gb.fragment_note.repository.Constants;
 import ru.gb.notes.R;
 import ru.gb.fragment_note.repository.Note;
 
@@ -19,6 +21,7 @@ public class NotesListHolder extends RecyclerView.ViewHolder {
     private final TextView descriptionView;
     private final ImageView imageView;
     private final TextView dateView;
+    private final ImageView popupMenuImageView;
     private Note note;
 
     public NotesListHolder(@NonNull View itemView, NotesListAdapter.OnNoteClickListener onNoteClickListener) {
@@ -27,9 +30,26 @@ public class NotesListHolder extends RecyclerView.ViewHolder {
         descriptionView = itemView.findViewById(R.id.description);
         imageView = itemView.findViewById(R.id.image);
         dateView = itemView.findViewById(R.id.date);
-        itemView.setOnClickListener(view -> {
-            if (onNoteClickListener != null)
-                onNoteClickListener.onNoteClick(note);
+
+
+        popupMenuImageView = itemView.findViewById(R.id.popup_menu);
+        popupMenuImageView.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(itemView.getContext(), popupMenuImageView);
+            popupMenu.inflate(R.menu.note_popup_menu);
+            popupMenu.setOnMenuItemClickListener(menuItem -> {
+                switch (menuItem.getItemId()) {
+                    case R.id.change_note:
+                        if (onNoteClickListener != null)
+                            onNoteClickListener.onNoteClick(note, Constants.EditResult.RESULT_UPDATE);
+                        return true;
+                    case R.id.delete_note:
+                        if (onNoteClickListener != null)
+                            onNoteClickListener.onNoteClick(note, Constants.EditResult.RESULT_DELETE);
+                        return true;
+                }
+                return false;
+            });
+            popupMenu.show();
         });
     }
 

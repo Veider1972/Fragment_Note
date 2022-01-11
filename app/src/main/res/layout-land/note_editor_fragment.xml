@@ -58,19 +58,10 @@
             android:id="@+id/accept_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="3sp"
+            android:paddingHorizontal="@dimen/note_editor_text_padding"
             android:elevation="@dimen/item_margin"
             android:text="@string/button_accept_text"
-            android:textSize="@dimen/note_editor_button_text_size"
-            app:iconGravity="textStart" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3sp"
-            android:layout_marginRight="3sp"
-            android:elevation="@dimen/item_margin"
-            android:text="@string/button_delete_text"
             android:textSize="@dimen/note_editor_button_text_size"
             app:iconGravity="textStart" />
 
@@ -78,6 +69,8 @@
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3sp"
+            android:paddingHorizontal="@dimen/note_editor_text_padding"
             android:elevation="@dimen/item_margin"
             android:text="@string/button_cancel_text"
             android:textSize="@dimen/note_editor_button_text_size" />

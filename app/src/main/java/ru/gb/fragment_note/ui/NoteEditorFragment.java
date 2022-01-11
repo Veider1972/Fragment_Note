@@ -39,11 +39,10 @@ public class NoteEditorFragment extends Fragment implements Constants {
     private static final String IMAGE_KEY = "IMAGE_KEY";
     private static final String DATE_KEY = "DATE_KEY";
 
+    private Note note;
     public void setNote(Note note) {
         this.note = note;
     }
-
-    private Note note;
     private NoteEditorController noteEditorController;
 
     interface NoteEditorController {
@@ -105,7 +104,6 @@ public class NoteEditorFragment extends Fragment implements Constants {
         });
 
         MaterialButton acceptButton = noteEditorFragment.findViewById(R.id.accept_button);
-        MaterialButton deleteButton = noteEditorFragment.findViewById(R.id.delete_button);
         MaterialButton cancelButton = noteEditorFragment.findViewById(R.id.cancel_button);
         acceptButton.setOnClickListener(view -> {
             assert titleTextInputEditText.getText() != null;
@@ -115,7 +113,6 @@ public class NoteEditorFragment extends Fragment implements Constants {
             noteEditorController.resultNoteEdit(EditResult.RESULT_UPDATE, note, this);
 
         });
-        deleteButton.setOnClickListener(view -> noteEditorController.resultNoteEdit(EditResult.RESULT_DELETE, note, this));
         cancelButton.setOnClickListener(view -> noteEditorController.resultNoteEdit(EditResult.RESULT_CANCEL, note, this));
 
         Bundle args = getArguments();
@@ -154,9 +151,9 @@ public class NoteEditorFragment extends Fragment implements Constants {
         super.onDetach();
     }
 
-    class SpinnerAdapter extends BaseAdapter implements Constants {
+    static class SpinnerAdapter extends BaseAdapter implements Constants {
 
-        LayoutInflater layoutInflater;
+        private final LayoutInflater layoutInflater;
 
         public SpinnerAdapter(@NonNull Context context) {
             layoutInflater = LayoutInflater.from(context);
