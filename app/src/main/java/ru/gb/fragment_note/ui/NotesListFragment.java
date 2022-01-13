@@ -23,14 +23,14 @@ public class NotesListFragment extends Fragment implements NotesListAdapter.OnNo
     private final Notes notes = Notes.getInstance();
 
     private NotesListAdapter notesViewerAdapter;
+
+    public NotesListAdapter getNotesViewerAdapter() {
+        return notesViewerAdapter;
+    }
     private NotesListController notesListController;
 
     interface NotesListController {
         void startNoteEdit(Note note);
-    }
-
-    public void notifyDataSetChanged() {
-        notesViewerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -67,7 +67,17 @@ public class NotesListFragment extends Fragment implements NotesListAdapter.OnNo
     }
 
     @Override
-    public void onNoteClick(Note note) {
-        notesListController.startNoteEdit(note);
+    public void onNoteClick(Note note, Constants.EditResult result) {
+        switch (result){
+            case RESULT_UPDATE:
+                notesListController.startNoteEdit(note);
+                break;
+            case RESULT_DELETE:
+                int index = notes.getIndexByID(note.getId());
+                notes.delete(note.getId());
+                notesViewerAdapter.notifyItemRemoved(index);
+                break;
+        }
+
     }
 }

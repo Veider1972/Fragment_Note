@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import ru.gb.fragment_note.repository.Constants;
 import ru.gb.fragment_note.repository.Note;
 import ru.gb.fragment_note.repository.Notes;
 import ru.gb.notes.R;
@@ -51,6 +52,6 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListHolder> {
 
 
     public interface OnNoteClickListener {
-        void onNoteClick(Note note);
+        void onNoteClick(Note note, Constants.EditResult result);
     }
 }

@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 
 public class Notes {
-    LinkedList<Note> notes;
+    private final LinkedList<Note> notes;
     private static Notes instance;
 
     public static Notes getInstance(){
@@ -42,7 +42,7 @@ public class Notes {
         return notes.getLast().getId()+1;
     }
 
-    private int getIndexByID(int id){
+    public int getIndexByID(int id){
         for (int i = 0; i < notes.size(); i++) {
             if (notes.get(i).getId()==id)
                 return i;
