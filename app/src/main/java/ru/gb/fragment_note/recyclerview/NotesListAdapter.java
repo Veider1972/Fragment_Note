@@ -27,7 +27,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListHolder> {
     public NotesListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.note,parent,false);
+        View view = inflater.inflate(R.layout.note, parent, false);
         return new NotesListHolder(view, onNoteClickListener);
     }
 
@@ -41,15 +41,15 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListHolder> {
         return notes.getSize();
     }
 
-    public void setOnNoteClickListener(OnNoteClickListener onNoteClickListener){
+    public void setOnNoteClickListener(OnNoteClickListener onNoteClickListener) {
         this.onNoteClickListener = onNoteClickListener;
     }
 
     public void setNotes(Notes notes) {
         this.notes = notes;
-        notifyDataSetChanged();
+        notifyItemRangeChanged(0, notes.getSize());
+        //notifyDataSetChanged();
     }
-
 
     public interface OnNoteClickListener {
         void onNoteClick(Note note, Constants.EditResult result);
