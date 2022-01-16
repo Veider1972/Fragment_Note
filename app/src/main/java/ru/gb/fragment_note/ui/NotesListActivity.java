@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Calendar;
 import java.util.Random;
 
@@ -18,18 +20,20 @@ import ru.gb.fragment_note.repository.Note;
 import ru.gb.fragment_note.repository.Notes;
 import ru.gb.notes.R;
 
-public class NotesListActivity extends AppCompatActivity implements NotesListFragment.NotesListController, NoteEditorFragment.NoteEditorController, Constants {
+public class NotesListActivity extends AppCompatActivity implements NoteEditorDialogFragment.NoteEditorController, NotesListFragment.NotesListController, Constants {
 
     private final Notes notes = Notes.getInstance();
     private NotesListFragment notesListFragment;
+    private static NotesListActivity notesListActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        notesListActivity = this;
         setContentView(R.layout.notes_list);
         notesListFragment = new NotesListFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.notes_list_fragment_container, notesListFragment)
+                .replace(R.id.main_layout, notesListFragment)
                 .commit();
         Random rnd = new Random();
         for (int i = 0; i < 10; i++) {
@@ -51,10 +55,10 @@ public class NotesListActivity extends AppCompatActivity implements NotesListFra
                 startNoteEdit(note);
                 break;
             case R.id.settings:
-                Toast.makeText(this,"Вызов настроек", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Вызов настроек", Toast.LENGTH_LONG).show();
                 break;
             case R.id.app_bar_search:
-                Toast.makeText(this,"Поиск заметки", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Поиск заметки", Toast.LENGTH_LONG).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -67,14 +71,13 @@ public class NotesListActivity extends AppCompatActivity implements NotesListFra
 
     @Override
     public void startNoteEdit(Note note) {
-        NoteEditorFragment noteEditorFragment = NoteEditorFragment.getInstance(note);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.note_editor_fragment_container, noteEditorFragment)
-                .commit();
+        NoteEditorDialogFragment noteEditorDialogFragment = new NoteEditorDialogFragment();
+        noteEditorDialogFragment.setNote(note);
+        noteEditorDialogFragment.show(getSupportFragmentManager(), null);
     }
 
     @Override
-    public void resultNoteEdit(EditResult result, Note note, NoteEditorFragment noteEditorFragment) {
+    public void resultNoteEdit(EditResult result, Note note, NoteEditorDialogFragment noteEditorDialogFragment) {
         switch (result) {
             case RESULT_UPDATE:
                 if (note != null) {
@@ -87,7 +90,29 @@ public class NotesListActivity extends AppCompatActivity implements NotesListFra
                 break;
         }
         getSupportFragmentManager().beginTransaction()
-                .remove(noteEditorFragment)
+                .remove(noteEditorDialogFragment)
                 .commit();
+    }
+
+    boolean isCloseAccepted = false;
+
+    @Override
+    public void onBackPressed() {
+        if (isCloseAccepted) {
+            this.finish();
+            return;
+        }
+        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (backStackEntryCount == 0) {
+            assert notesListFragment.getView() != null;
+            Snackbar snackbar = Snackbar.make(notesListFragment.getView(), R.string.main_activity_on_close_question, Snackbar.LENGTH_LONG);
+            snackbar.setAction(R.string.button_yes_text, view -> {
+                isCloseAccepted = true;
+                notesListActivity.onBackPressed();
+            });
+            snackbar.show();
+        }
+        if (backStackEntryCount > 0)
+            super.onBackPressed();
     }
 }

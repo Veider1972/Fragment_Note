@@ -1,9 +1,20 @@
 <resources>
-    <string name="app_name">Мои фрагментные заметки</string>
+    <string name="app_name">Мои заметки</string>
     <string name="editor_description_lines">Текст заметки</string>
     <string name="editor_title_hint">Заголовок</string>
     <string name="editor_description_hint">Текст заметки</string>
     <string name="button_accept_text">Принять</string>
     <string name="button_delete_text">Удалить</string>
     <string name="button_cancel_text">Отменить</string>
+    <string name="button_yes_text">Да</string>
+    <string name="button_no_text">Нет</string>
+    <string name="title_attention">ВНИМАНИЕ</string>
+    <string name="alert_accept">Сохранить изменения?</string>
+    <string name="main_activity_on_close_question">Закрыть приложение?</string>
+    <string name="editor_empty_close_message">Вы не можете сохранить пустую заметку</string>
+    <string name="menu_item_settings">Настройки</string>
+    <string name="menu_item_add_note">Добавить заметку</string>
+    <string name="menu_item_find_note">Поиск заметки</string>
+    <string name="menu_item_delete">Удалить</string>
+    <string name="menu_item_edit">Изменить</string>
 </resources>

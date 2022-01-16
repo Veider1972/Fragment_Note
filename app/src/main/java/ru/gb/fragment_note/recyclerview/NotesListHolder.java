@@ -30,8 +30,6 @@ public class NotesListHolder extends RecyclerView.ViewHolder {
         descriptionView = itemView.findViewById(R.id.description);
         imageView = itemView.findViewById(R.id.image);
         dateView = itemView.findViewById(R.id.date);
-
-
         popupMenuImageView = itemView.findViewById(R.id.popup_menu);
         popupMenuImageView.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(itemView.getContext(), popupMenuImageView);

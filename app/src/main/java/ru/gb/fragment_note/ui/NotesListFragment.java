@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import ru.gb.fragment_note.recyclerview.NoteListItemDecoration;
 import ru.gb.fragment_note.recyclerview.NotesListAdapter;
 import ru.gb.fragment_note.repository.Constants;
 import ru.gb.fragment_note.repository.Note;
@@ -27,6 +28,7 @@ public class NotesListFragment extends Fragment implements NotesListAdapter.OnNo
     public NotesListAdapter getNotesViewerAdapter() {
         return notesViewerAdapter;
     }
+
     private NotesListController notesListController;
 
     interface NotesListController {
@@ -55,6 +57,7 @@ public class NotesListFragment extends Fragment implements NotesListAdapter.OnNo
         notesViewerAdapter.setNotes(notes);
         notesViewerAdapter.setOnNoteClickListener(this);
         RecyclerView notesViewer = notesViewFragment.findViewById(R.id.notes_viewer);
+        notesViewer.addItemDecoration(new NoteListItemDecoration(ITEMS_SPACE));
         notesViewer.setLayoutManager(new LinearLayoutManager(getContext()));
         notesViewer.setAdapter(notesViewerAdapter);
         return notesViewFragment;
@@ -68,7 +71,7 @@ public class NotesListFragment extends Fragment implements NotesListAdapter.OnNo
 
     @Override
     public void onNoteClick(Note note, Constants.EditResult result) {
-        switch (result){
+        switch (result) {
             case RESULT_UPDATE:
                 notesListController.startNoteEdit(note);
                 break;
@@ -78,6 +81,5 @@ public class NotesListFragment extends Fragment implements NotesListAdapter.OnNo
                 notesViewerAdapter.notifyItemRemoved(index);
                 break;
         }
-
     }
 }
