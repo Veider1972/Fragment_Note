@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/note_editor_fragment"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/item_margin"
+    android:padding="@dimen/item_margin"
     android:orientation="vertical"
     android:theme="@style/Theme.MyNotes">
 
@@ -14,11 +14,28 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/spinner_image"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/spinner_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                tools:listitem="@layout/row_image" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="15.10.21"
+                android:textSize="@dimen/note_date_text_size" />
+
+        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/title_text_editor"
@@ -29,13 +46,6 @@
             android:textSize="@dimen/note_title_text_size"
             tools:text="Заголовок" />
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0"
-            android:textSize="@dimen/note_date_text_size" />
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputEditText
@@ -47,38 +57,4 @@
         android:textSize="@dimen/note_description_text_size"
         tools:text="Текст заметки" />
 
-    <com.google.android.material.circularreveal.CircularRevealGridLayout
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:columnCount="3"
-        android:rowCount="1">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/accept_button"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_marginRight="3sp"
-            android:elevation="@dimen/item_margin"
-            android:text="@string/button_accept_text"
-            android:textSize="@dimen/note_editor_button_text_size"
-            app:iconGravity="textStart" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/cancel_button"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:layout_marginLeft="3sp"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:elevation="@dimen/item_margin"
-            android:text="@string/button_cancel_text"
-            android:textSize="@dimen/note_editor_button_text_size" />
-
-    </com.google.android.material.circularreveal.CircularRevealGridLayout>
 </LinearLayout>
